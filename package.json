@@ -1,7 +1,7 @@
 {
   "name": "react-native-jointag",
   "title": "React Native Jointag",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TODO",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/github_account/react-native-jointag.git",
-    "baseUrl": "https://github.com/github_account/react-native-jointag"
+    "url": "git+https://github.com/mondadori-digital/react-native-jointag.git",
+    "baseUrl": "https://github.com/mondadori-digital/react-native-jointag"
   },
   "keywords": [
     "react-native"
