@@ -6,16 +6,29 @@
 
 RCT_EXPORT_MODULE()
 
-//RCT_EXPORT_METHOD(getConsent:(int)forVendor)
-//{
-//    RCTLogInfo(@"getConsent for Vendor %d", forVendor);
-//    BOOL consent = [[JTProximitySDK sharedInstance] getGDPRConsentForVendor:forVendor];
-//}
-
-RCT_EXPORT_METHOD(setConsent:(int)forVendor value:(BOOL)value)
+RCT_EXPORT_METHOD(setConsent:(BOOL)value)
 {
-    RCTLogInfo(@"setConsent %s for Vendor %d", value ? "true" : "false", forVendor);
-    [[JTProximitySDK sharedInstance] setGDPRConsent:value forVendor:forVendor];
+    RCTLogInfo(@"setConsent %s", value ? "1" : "0");
+    
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *consent = value ? @"1" : @"0";
+    [userDefaults setObject:consent forKey:@"IABTCF_PublisherCustomPurposesConsents"];
+
+    [userDefaults synchronize];
+}
+
+RCT_EXPORT_METHOD(getAdvertisingId:(RCTPromiseResolveBlock)resolve 
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    NSString *advID = [JTProximitySDK sharedInstance].advertisingId;
+    resolve(advID);
+}
+
+RCT_EXPORT_METHOD(getInstallationId:(RCTPromiseResolveBlock)resolve 
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    NSString *instID = [JTProximitySDK sharedInstance].installationId;
+    resolve(instID);
 }
 
 @end
