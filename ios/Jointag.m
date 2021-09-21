@@ -8,9 +8,10 @@ RCT_EXPORT_MODULE()
 
 - (NSDictionary *)constantsToExport
 {
- return @{ @"MANUAL_CONSENT_PROFILING": @(JTPManualConsentProfiling) };
- return @{ @"MANUAL_CONSENT_MONITORING": @(JTPManualConsentMonitoring) };
- return @{ @"MANUAL_CONSENT_ADVERTISING": @(JTPManualConsentAdvertising) };
+ return @{ @"MANUAL_CONSENT_PROFILING": @"MANUAL_CONSENT_PROFILING",
+           @"MANUAL_CONSENT_MONITORING": @"MANUAL_CONSENT_MONITORING",
+           @"MANUAL_CONSENT_ADVERTISING": @"MANUAL_CONSENT_ADVERTISING"
+           };
 }
 
 RCT_EXPORT_METHOD(setConsent:(BOOL)value)
@@ -29,10 +30,19 @@ RCT_EXPORT_METHOD(setManualConsent:(NSString *)type value:(BOOL)value)
     RCTLogInfo(@"setManualConsent %s %s", type, value ? "1" : "0");
     NSLog(@"setManualConsent %s %s", type, value ? "1" : "0");
     
-    [JTProximitySDK.sharedInstance setManualConsent:value forType:type];
+    if([type isEqualToString:@"MANUAL_CONSENT_PROFILING"]) {
+        [JTProximitySDK.sharedInstance setManualConsent:value forType:@(JTPManualConsentProfiling)];
+        RCTLogInfo(@"setManualConsent Profiling");
+    } else if([type isEqualToString:@"MANUAL_CONSENT_MONITORING"]) {
+        [JTProximitySDK.sharedInstance setManualConsent:value forType:@(JTPManualConsentMonitoring)];
+        RCTLogInfo(@"setManualConsent Monitoring");
+    } else if([type isEqualToString:@"MANUAL_CONSENT_ADVERTISING"]) {
+        [JTProximitySDK.sharedInstance setManualConsent:value forType:@(JTPManualConsentAdvertising)];
+        RCTLogInfo(@"setManualConsent Advertising");
+    }
 }
 
-RCT_EXPORT_METHOD(getAdvertisingId:(RCTPromiseResolveBlock)resolve 
+RCT_EXPORT_METHOD(getAdvertisingId:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
     NSString *advID = [JTProximitySDK sharedInstance].advertisingId;
@@ -40,7 +50,7 @@ RCT_EXPORT_METHOD(getAdvertisingId:(RCTPromiseResolveBlock)resolve
     resolve(advID);
 }
 
-RCT_EXPORT_METHOD(getInstallationId:(RCTPromiseResolveBlock)resolve 
+RCT_EXPORT_METHOD(getInstallationId:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
     NSString *instID = [JTProximitySDK sharedInstance].installationId;

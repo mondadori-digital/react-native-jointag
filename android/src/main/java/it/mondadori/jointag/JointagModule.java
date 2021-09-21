@@ -8,8 +8,6 @@ import com.facebook.react.bridge.Promise;
 import com.jointag.proximity.ProximitySDK;
 import com.jointag.proximity.cmp.ManualConsent;
 
-import androidx.preference.PreferenceManager;
-import android.content.SharedPreferences;
 import android.content.Context;
 import android.util.Log;
 
@@ -65,14 +63,6 @@ public class JointagModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void checkPendingPermissions() {
         ProximitySDK.getInstance().checkPendingPermissions();
-    }
-
-    @ReactMethod
-    public void setConsent(Boolean value) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.reactContext);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("IABTCF_PublisherCustomPurposesConsents", value ? "1" : "0");
-        editor.apply();
     }
 
     @ReactMethod
