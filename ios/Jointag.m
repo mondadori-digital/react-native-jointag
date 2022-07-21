@@ -14,6 +14,11 @@ RCT_EXPORT_MODULE()
            };
 }
 
++ (BOOL)requiresMainQueueSetup
+{
+    return NO;
+}
+
 RCT_EXPORT_METHOD(setConsent:(BOOL)value)
 {
     RCTLogInfo(@"setConsent %s", value ? "1" : "0");
