@@ -66,5 +66,5 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
     // ProximitySDK SDK
-    implementation("com.jointag:proximitysdk:1.15.+")
+    implementation("com.jointag:proximitysdk:1.18.+")
 }
